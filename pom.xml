@@ -18,6 +18,8 @@
     <properties>
         <java-source-version>1.8</java-source-version>
         <java-source-target>1.8</java-source-target>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.8</maven.compiler.source>
 
         <spring-boot-version>2.3.4.RELEASE</spring-boot-version>
         <spring-boot-webflux-version>2.3.4.RELEASE</spring-boot-webflux-version>
