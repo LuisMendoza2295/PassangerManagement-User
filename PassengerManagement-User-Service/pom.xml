@@ -19,9 +19,8 @@
         </dependency>
 
         <dependency>
-            <groupId>${project.parent.groupId}</groupId>
+            <groupId>com.pm.user</groupId>
             <artifactId>pm-user-repository</artifactId>
-            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

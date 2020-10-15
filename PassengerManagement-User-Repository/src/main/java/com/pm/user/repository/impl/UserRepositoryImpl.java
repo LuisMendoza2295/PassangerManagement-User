@@ -1,11 +1,12 @@
 package com.pm.user.repository.impl;
 
+import com.pm.user.domain.exception.UserNotFoundException;
+import com.pm.user.domain.exception.UserProcessingException;
 import com.pm.user.domain.model.User;
 import com.pm.user.domain.repository.UserRepository;
 import com.pm.user.domain.vo.UserID;
 import com.pm.user.repository.mapper.UserRepositoryMapper;
 import com.pm.user.repository.reactive.UserRepositoryReactive;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
@@ -25,8 +26,10 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
-    public Mono<User> get(UserID userID) {
+    public Mono<User> getByUserID(UserID userID) {
         return this.userRepositoryReactive.findByUuid(userID.getValue())
-                .map(this.userRepositoryMapper::map);
+                .map(this.userRepositoryMapper::map)
+                .onErrorMap(UserProcessingException::new)
+                .switchIfEmpty(Mono.error(new UserNotFoundException(userID)));
     }
 }

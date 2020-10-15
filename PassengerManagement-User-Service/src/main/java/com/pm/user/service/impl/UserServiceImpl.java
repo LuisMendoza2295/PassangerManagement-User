@@ -17,6 +17,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public Mono<User> findUser(UserID userID) {
-        return this.userRepository.get(userID);
+        return this.userRepository.getByUserID(userID);
     }
 }

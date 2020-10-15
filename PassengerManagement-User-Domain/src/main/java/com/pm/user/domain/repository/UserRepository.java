@@ -8,5 +8,5 @@ public interface UserRepository {
 
     Mono<User> create(User user);
 
-    Mono<User> get(UserID userID);
+    Mono<User> getByUserID(UserID userID);
 }
