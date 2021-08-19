@@ -1,9 +1,13 @@
 package com.pm.user;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.config.MeterFilter;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.metrics.MeterRegistryCustomizer;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.r2dbc.connectionfactory.init.CompositeDatabasePopulator;
@@ -11,6 +15,7 @@ import org.springframework.data.r2dbc.connectionfactory.init.ConnectionFactoryIn
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator;
 
 @SpringBootApplication
+@EnableConfigurationProperties
 public class UserApplication {
 
     public static void main(String[] args) {
@@ -28,5 +33,12 @@ public class UserApplication {
 
         initializer.setDatabasePopulator(populator);
         return initializer;
+    }
+
+    @Bean
+    MeterRegistryCustomizer<MeterRegistry> registryCustomizer() {
+        return registry -> registry.config()
+                .commonTags("app_name", "pm-users-app")
+                .meterFilter(MeterFilter.denyNameStartsWith("jvm"));
     }
 }

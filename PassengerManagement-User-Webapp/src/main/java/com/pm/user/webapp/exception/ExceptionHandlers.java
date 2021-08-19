@@ -23,7 +23,7 @@ public class ExceptionHandlers {
 
     @ExceptionHandler(UserProcessingException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String userProcessingException(UserProcessingException e) {
+    public String userProcessingExceptionHandler(UserProcessingException e) {
         LOGGER.error(e.getMessage(), e);
         return e.getMessage();
     }
